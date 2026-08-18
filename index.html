@@ -109,6 +109,27 @@
   .empty{text-align:center;padding:60px 20px;color:var(--ink-soft)}
   .empty strong{font-family:'Fraunces',serif;font-size:19px;color:var(--ink);display:block;margin-bottom:6px}
 
+  /* ---- Bônus ---- */
+  .bonus-section{padding:26px 0 6px}
+  .bonus-head{display:flex;align-items:center;gap:9px;margin-bottom:14px;color:var(--brand-deep)}
+  .bonus-head h2{font-family:'Fraunces',serif;font-weight:500;font-size:20px;letter-spacing:-.01em;color:var(--ink)}
+  .bonus-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+  .bonus-card{display:flex;gap:14px;align-items:flex-start;background:var(--paper-2);
+    border:1px solid var(--line);border-radius:14px;padding:16px;text-decoration:none;
+    color:inherit;transition:transform .15s,box-shadow .15s,border-color .15s}
+  .bonus-card:hover{transform:translateY(-2px);box-shadow:var(--shadow);border-color:transparent}
+  .bonus-thumb{width:54px;height:70px;border-radius:7px;flex-shrink:0;overflow:hidden;
+    background:var(--tc,var(--brand));display:flex;align-items:center;justify-content:center;
+    box-shadow:0 4px 10px -4px rgba(38,35,30,.35)}
+  .bonus-thumb img{width:100%;height:100%;object-fit:cover}
+  .bonus-thumb .ph{color:#fff;font-family:'Fraunces',serif;font-weight:600;font-size:20px}
+  .bonus-info{flex:1;min-width:0}
+  .bonus-title{font-family:'Fraunces',serif;font-weight:600;font-size:15.5px;line-height:1.25;margin-bottom:4px}
+  .bonus-desc{font-size:13.5px;color:var(--ink-soft);line-height:1.45;margin-bottom:9px}
+  .bonus-price{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600}
+  .bonus-price .old{color:#B65B4A;text-decoration:line-through;font-weight:500}
+  .bonus-price .free{color:var(--brand);letter-spacing:.02em}
+
   /* ---- Modal ---- */
   .overlay{position:fixed;inset:0;background:rgba(38,35,30,.5);backdrop-filter:blur(3px);
     z-index:100;display:none;align-items:flex-start;justify-content:center;padding:28px 16px;overflow-y:auto}
@@ -177,6 +198,10 @@
     .section-head h2{font-size:19px}
     .grid{gap:12px}
     .card-title{font-size:15.5px}
+    .bonus-section{padding:20px 0 4px}
+    .bonus-grid{grid-template-columns:1fr;gap:10px}
+    .bonus-card{padding:13px}
+    .bonus-thumb{width:46px;height:60px}
     .modal{border-radius:16px}
     .modal-side{padding:22px 20px 26px}
     .m-title{font-size:21px}
@@ -209,6 +234,16 @@
     <p class="lede">Encontre o material certo pela demanda que você está atendendo. Cada recurso vem com prévia, download e o racional terapêutico por trás dele.</p>
   </div>
 </header>
+
+<div class="bonus-section">
+  <div class="wrap">
+    <div class="bonus-head">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12v10H4V12"/><path d="M2 7h20v5H2z"/><path d="M12 22V7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>
+      <h2>Bônus exclusivos</h2>
+    </div>
+    <div class="bonus-grid" id="bonusGrid"></div>
+  </div>
+</div>
 
 <div class="controls">
   <div class="wrap controls-inner">
@@ -282,6 +317,46 @@ const RECURSOS = _ALL_RAW.map((r, idx) => ({
   descricao: r.descricao,
   racional: r.racional
 }));
+
+/* ============================================================
+   BÔNUS — materiais extras (fichas/checklists pra imprimir e
+   guias/roteiros escritos). Preview e pdf apontam pra pasta bonus/.
+   ============================================================ */
+const BONUS = [
+  { id:'anamnese', nome:'Fichas de Anamnese Infantil Estruturadas',
+    descricao:'Modelos prontos para a primeira sessão com os pais. Chegue preparada desde o início.',
+    precoOriginal:'27,00' },
+  { id:'devolutiva', nome:'Roteiro de Devolutiva para Pais',
+    descricao:'Scripts prontos para dar feedback aos pais de forma clara e profissional. Sem travar na hora de falar.',
+    precoOriginal:'19,00' },
+  { id:'checklist-sessao', nome:'Checklist de Planejamento de Sessão',
+    descricao:'Passo a passo para organizar cada sessão antes de começar. Nada de improvisar.',
+    precoOriginal:'17,00' },
+  { id:'manejo-pais-dificeis', nome:'Guia de Manejo com Pais Difíceis',
+    descricao:'Estratégias práticas pra lidar com pais resistentes, cobradores ou ausentes. O que muita psicóloga precisava.',
+    precoOriginal:'17,00' },
+  { id:'psicoeducacao-visual', nome:'Kit de Psicoeducação Visual para Pais',
+    descricao:'Materiais ilustrados para explicar ansiedade, TDAH, regulação emocional. Deixa os pais mais parceiros no processo.',
+    precoOriginal:'17,00' },
+].map(b => ({
+  ...b,
+  preview: `bonus/${b.id}.png`,
+  pdf: `bonus/${b.id}.pdf`
+}));
+
+function bonusHTML(){
+  return BONUS.map(b => `
+    <a class="bonus-card" href="${b.pdf}" download target="_blank" rel="noopener">
+      <div class="bonus-thumb">
+        <img src="${b.preview}" alt="${b.nome}" onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'ph',textContent:'${b.nome.trim()[0]}'}))">
+      </div>
+      <div class="bonus-info">
+        <div class="bonus-title">${b.nome}</div>
+        <div class="bonus-desc">${b.descricao}</div>
+        <div class="bonus-price"><span class="old">De R$${b.precoOriginal}</span><span class="free">GRÁTIS</span></div>
+      </div>
+    </a>`).join('');
+}
 
 /* ============================================================
    RENDER
@@ -383,6 +458,7 @@ function closeModal(){
 }
 
 /* Eventos */
+document.getElementById('bonusGrid').innerHTML = bonusHTML();
 document.getElementById('chips').innerHTML = chipsHTML();
 render();
 
