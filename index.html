@@ -64,7 +64,7 @@
     display:flex;align-items:center;gap:10px;background:var(--paper-2);
     border:1px solid var(--line);border-radius:100px;padding:11px 18px;max-width:440px;width:100%;
   }
-  .search input{border:0;background:transparent;font-family:inherit;font-size:15px;
+  .search input{border:0;background:transparent;font-family:inherit;font-size:16px;
     width:100%;color:var(--ink);outline:none}
   .search svg{flex-shrink:0;color:var(--ink-soft)}
   .chips{display:flex;gap:8px;overflow-x:auto;padding-bottom:2px;-webkit-overflow-scrolling:touch}
@@ -158,7 +158,7 @@
   .login-lede{color:var(--ink-soft);font-size:14.5px;margin:16px 0 24px;line-height:1.5}
   .login-form{display:flex;flex-direction:column;gap:12px;text-align:left}
   .login-form input{border:1px solid var(--line);background:var(--paper);border-radius:12px;
-    padding:13px 16px;font-family:inherit;font-size:15px;color:var(--ink);outline:none;transition:.15s}
+    padding:13px 16px;font-family:inherit;font-size:16px;color:var(--ink);outline:none;transition:.15s}
   .login-form input:focus{border-color:var(--brand)}
   .login-form input.error{border-color:#C15B4A}
   .login-error{color:#C15B4A;font-size:13px;display:none;margin-top:-4px}
@@ -166,6 +166,23 @@
   .login-submit{background:var(--brand);color:#fff;font-family:inherit;font-size:15px;font-weight:600;
     border:0;border-radius:12px;padding:13px;cursor:pointer;transition:.15s}
   .login-submit:hover{background:var(--brand-deep)}
+
+  /* ---- Mobile ---- */
+  @media(max-width:600px){
+    .wrap{padding:0 16px}
+    header{padding:28px 0 22px}
+    .lede{font-size:14.5px}
+    .controls{padding:12px 0}
+    .section-head{margin:20px 0 12px}
+    .section-head h2{font-size:19px}
+    .grid{gap:12px}
+    .card-title{font-size:15.5px}
+    .modal{border-radius:16px}
+    .modal-side{padding:22px 20px 26px}
+    .m-title{font-size:21px}
+    .close{width:38px;height:38px;top:12px;right:12px}
+    .login-card{padding:28px 22px}
+  }
 </style>
 </head>
 <body>
