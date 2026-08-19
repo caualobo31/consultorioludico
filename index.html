@@ -119,9 +119,13 @@
   .bonus-summary .chevron{flex-shrink:0;color:var(--ink-soft);transition:transform .18s}
   .bonus-details[open] .bonus-summary .chevron{transform:rotate(90deg)}
   .bonus-list{padding:2px 18px 16px;display:flex;flex-direction:column;gap:14px}
+  .bonus-item{display:block;text-decoration:none;color:inherit}
   .bonus-item-title{font-family:'Fraunces',serif;font-weight:600;font-size:14.5px;
     line-height:1.3;color:var(--ink);margin-bottom:3px}
   .bonus-item-desc{font-size:13.5px;color:var(--ink-soft);line-height:1.45}
+  a.bonus-item{cursor:pointer}
+  a.bonus-item .bonus-item-title{color:var(--brand-deep)}
+  a.bonus-item:hover .bonus-item-title{text-decoration:underline}
 
   /* ---- Modal ---- */
   .overlay{position:fixed;inset:0;background:rgba(38,35,30,.5);backdrop-filter:blur(3px);
@@ -315,7 +319,7 @@ const RECURSOS = _ALL_RAW.map((r, idx) => ({
    de download quando o id entrar em _AVAILABLE_BONUS (arquivo real
    em bonus/<id>.pdf). Até lá fica só como texto, sem link quebrado.
    ============================================================ */
-const _AVAILABLE_BONUS = new Set([]);
+const _AVAILABLE_BONUS = new Set(['anamnese', 'devolutiva']);
 const BONUS = [
   { id:'anamnese', nome:'Fichas de Anamnese Infantil Estruturadas',
     descricao:'Modelos prontos para a primeira sessão com os pais. Chegue preparada desde o início.' },
